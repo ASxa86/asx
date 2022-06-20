@@ -6,8 +6,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${PROJECT_INCLUDE_DIR}/asx/object/Bytes.h
 	${PROJECT_INCLUDE_DIR}/asx/object/Object.h
 	${PROJECT_INCLUDE_DIR}/asx/object/String.h
-	${PROJECT_INCLUDE_DIR}/asx/object/TypeInfo.h
-	${PROJECT_INCLUDE_DIR}/asx/object/TypeTraits.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

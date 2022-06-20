@@ -1,6 +1,6 @@
 #pragma once
 
-#include <asx/object/TypeTraits.h>
+#include <asx/type/TypeTraits.h>
 #include <array>
 #include <asx/object/export.hxx>
 #include <charconv>

@@ -1,4 +1,4 @@
-#include <asx/object/TypeTraits.h>
+#include <asx/type/TypeTraits.h>
 #include <gtest/gtest.h>
 
 #include <array>

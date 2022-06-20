@@ -1,4 +1,4 @@
-#include <asx/object/TypeInfo.h>
+#include <asx/type/TypeInfo.h>
 #include <gtest/gtest.h>
 
 namespace asx
