@@ -10,7 +10,7 @@ namespace asx
 	///	\brief Get the human readable string for the given type at compile-time.
 	///
 	template <typename T>
-	constexpr std::string_view GetTypeName()
+	constexpr std::string_view TypeName()
 	{
 		// Arithmetic values are currently not supported. This is due to the amount of work involved to ensure
 		// cross-platform compatibility. MSVC: "unsigned int", GCC: "int unsigned".

@@ -14,12 +14,12 @@ namespace asx
 
 TEST(TypeInfo, typeName_struct)
 {
-	constexpr std::string_view test = asx::GetTypeName<asx::TypeTwo>();
+	constexpr std::string_view test = asx::TypeName<asx::TypeTwo>();
 	EXPECT_EQ(test, "asx::TypeTwo");
 }
 
 TEST(TypeInfo, typeName_class)
 {
-	constexpr std::string_view test = asx::GetTypeName<asx::TypeOne>();
+	constexpr std::string_view test = asx::TypeName<asx::TypeOne>();
 	EXPECT_EQ(test, "asx::TypeOne");
 }
