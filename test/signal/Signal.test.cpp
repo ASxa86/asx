@@ -13,7 +13,6 @@ TEST(Signal, construct)
 TEST(Signal, connect)
 {
 	Signal<void(int)> signal;
-
 	signal.connect([](int) {});
 }
 
@@ -22,7 +21,14 @@ TEST(Signal, invoke)
 	Signal<void(int)> signal;
 
 	auto test{false};
-	signal.connect([&test](int) { test = true; });
+
+	{
+		asx::Connection cx = signal.connect([&test](int) { test = true; });
+		signal(0);
+		EXPECT_TRUE(test);
+	}
+
+	test = false;
 	signal(0);
-	EXPECT_TRUE(test);
+	EXPECT_FALSE(test);
 }

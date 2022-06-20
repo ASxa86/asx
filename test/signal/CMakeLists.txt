@@ -9,6 +9,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 find_package(GTest CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+	asx-signal
 	GTest::gtest_main
 	GTest::gtest
 )
