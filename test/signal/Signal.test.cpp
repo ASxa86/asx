@@ -1,57 +1,28 @@
-#include <asx/type/TypeTraits.h>
+#include <asx/signal/Signal.h>
 #include <gtest/gtest.h>
 
-#include <array>
-#include <deque>
-#include <list>
-#include <map>
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+using asx::Signal;
 
-TEST(TypeTraits, pod)
+TEST(Signal, construct)
 {
-	auto test = asx::is_container<char>::value;
-	EXPECT_FALSE(test);
-
-	test = asx::is_container<int>::value;
-	EXPECT_FALSE(test);
-
-	test = asx::is_container<double>::value;
-	EXPECT_FALSE(test);
+	Signal<void()> signalVoid;
+	Signal<void(int)> signalInt;
+	Signal<int(int)> signalIntInt;
 }
 
-TEST(TypeTraits, map)
+TEST(Signal, connect)
 {
-	auto test = asx::is_container<std::map<int, int>>::value;
-	EXPECT_TRUE(test);
+	Signal<void(int)> signal;
 
-	test = asx::is_container<std::map<std::string, int>>::value;
-	EXPECT_TRUE(test);
-
-	test = asx::is_container<std::map<std::string, std::string>>::value;
-	EXPECT_TRUE(test);
-
-	test = asx::is_map<std::map<std::string, std::string>>::value;
-	EXPECT_TRUE(test);
+	signal.connect([](int) {});
 }
 
-TEST(TypeTraits, vector)
+TEST(Signal, invoke)
 {
-	auto test = asx::is_container<std::vector<int>>::value;
+	Signal<void(int)> signal;
+
+	auto test{false};
+	signal.connect([&test](int) { test = true; });
+	signal(0);
 	EXPECT_TRUE(test);
-
-	test = asx::is_container<std::vector<std::string>>::value;
-	EXPECT_TRUE(test);
-}
-
-TEST(TypeTraits, array)
-{
-	auto test = asx::is_container<std::array<int, sizeof(int)>>::value;
-	EXPECT_FALSE(test);
-
-	test = asx::is_container<std::array<std::string, sizeof(std::string)>>::value;
-	EXPECT_FALSE(test);
 }
