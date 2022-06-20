@@ -1,14 +1,13 @@
-project(asx-type)
+project(asx-signal)
 
 add_library(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${PROJECT_INCLUDE_DIR}/asx/type/TypeName.h
-	${PROJECT_INCLUDE_DIR}/asx/type/TypeTraits.h
+	${PROJECT_INCLUDE_DIR}/asx/signal/Signal.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	TypeName.cpp
+	Signal.cpp
 )
 
 project_install_target()
