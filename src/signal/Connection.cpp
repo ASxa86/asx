@@ -2,10 +2,28 @@
 
 using asx::Connection;
 
-Connection::~Connection()
+Connection::Connection(const std::weak_ptr<ConnectionBodyBase>& x) : body{x}
 {
-	if(this->raii)
+}
+
+bool Connection::connected() const
+{
+	auto cx = this->body.lock();
+
+	if(cx != nullptr)
 	{
-		this->raii();
+		return cx->getConnected();
+	}
+
+	return false;
+}
+
+void Connection::disconnect() const
+{
+	auto cx = this->body.lock();
+
+	if(cx != nullptr)
+	{
+		cx->disconnect();
 	}
 }

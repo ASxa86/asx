@@ -1,8 +1,7 @@
 #pragma once
 
 #include <asx/signal/Connection.h>
-#include <deque>
-#include <functional>
+#include <asx/signal/Slot.h>
 
 namespace asx
 {
@@ -13,27 +12,37 @@ namespace asx
 	class Signal<R(Args...)>
 	{
 	public:
-		decltype(auto) connect(std::function<R(Args...)> x)
+		using SlotType = Slot<R(Args...)>;
+
+		Connection connect(Slot<R(Args...)> x)
 		{
-			// If object is copied, track the connection.
-			// Else, do not disconnect.
-
-			this->slots.emplace_back(std::move(x));
-			auto it = std::end(this->slots);
-			it--;
-
-			return [it, this] { this->slots.erase(it, std::end(this->slots)); };
+			auto connection = std::make_shared<ConnectionBody<SlotType>>(SlotType{std::forward<SlotType>(x)});
+			this->connections.emplace_back(connection);
+			return Connection{connection};
 		}
 
 		R operator()(Args... args)
 		{
-			for(auto slot : this->slots)
+			auto copy = this->connections;
+			for(const auto& connection : copy)
 			{
-				slot(std::forward<Args>(args)...);
+				if(connection->getConnected() == false)
+				{
+					this->connections.erase(std::find(std::begin(this->connections), std::end(this->connections), connection),
+											std::end(this->connections));
+				}
 			}
+
+			for(const auto& connection : this->connections)
+			{
+				connection->getSlot()(std::forward<Args>(args)...);
+			}
+
+			// return combine.result();
+			// return {};
 		}
 
 	private:
-		std::deque<std::function<R(Args...)>> slots;
+		std::vector<std::shared_ptr<ConnectionBody<SlotType>>> connections;
 	};
 }

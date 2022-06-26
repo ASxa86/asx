@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 using asx::Signal;
+using asx::Slot;
 
 TEST(Signal, construct)
 {
@@ -12,23 +13,47 @@ TEST(Signal, construct)
 
 TEST(Signal, connect)
 {
-	Signal<void(int)> signal;
-	signal.connect([](int) {});
+	Signal<void()> signal;
+	std::function<void()> f{[]() {}};
+	signal.connect(f);
 }
 
 TEST(Signal, invoke)
 {
-	Signal<void(int)> signal;
+	Signal<void()> signal;
 
 	auto test{false};
 
 	{
-		asx::Connection cx = signal.connect([&test](int) { test = true; });
-		signal(0);
+		std::function<void()> f{[&test]() { test = true; }};
+		asx::Connection cx = signal.connect(f);
+		signal();
+		EXPECT_TRUE(test);
+		EXPECT_TRUE(cx.connected());
+		cx.disconnect();
+	}
+
+	test = false;
+	signal();
+	EXPECT_FALSE(test);
+}
+
+TEST(Signal, track)
+{
+	Signal<void()> signal;
+
+	auto test{false};
+	Slot<void()> slot{[&test]() { test = true; }};
+
+	{
+		auto object = std::make_shared<int>();
+		slot.track(object);
+		signal.connect(slot);
+		signal();
 		EXPECT_TRUE(test);
 	}
 
 	test = false;
-	signal(0);
-	EXPECT_FALSE(test);
+	signal();
+	EXPECT_FALSE(false);
 }
