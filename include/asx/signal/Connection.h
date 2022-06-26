@@ -61,6 +61,7 @@ namespace asx
 	class ASX_SIGNAL_EXPORT Connection
 	{
 	public:
+		Connection() = default;
 		Connection(const std::weak_ptr<ConnectionBodyBase>& x);
 
 		bool connected() const;

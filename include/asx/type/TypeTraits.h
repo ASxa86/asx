@@ -137,4 +137,22 @@ namespace asx
 	struct is_string<std::string_view> : std::true_type
 	{
 	};
+
+	namespace concepts
+	{
+		template <typename T>
+		concept duration = is_duration<T>::value == true;
+
+		template <typename T>
+		concept string = is_string<T>::value == true;
+
+		template <typename T>
+		concept container = is_container<T>::value == true;
+
+		template <typename T>
+		concept boolean = std::is_same<bool, T>::value == true;
+
+		template <typename T>
+		concept integral = std::is_arithmetic<T>::value == true && std::is_same<bool, T>::value == false && std::is_floating_point<T>::value == false;
+	}
 }

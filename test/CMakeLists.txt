@@ -1,4 +1,5 @@
 add_subdirectory(gl)
 add_subdirectory(object)
 add_subdirectory(signal)
+add_subdirectory(string)
 add_subdirectory(type)
