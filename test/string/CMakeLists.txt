@@ -3,7 +3,7 @@ project(test-asx-string)
 add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
-	String.test.cpp
+	StringConv.test.cpp
 )
 
 find_package(GTest CONFIG REQUIRED)

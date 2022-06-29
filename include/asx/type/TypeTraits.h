@@ -147,12 +147,20 @@ namespace asx
 		concept string = is_string<T>::value == true;
 
 		template <typename T>
-		concept container = is_container<T>::value == true;
+		concept container =
+			is_array<T>::value == true || is_vector<T>::value == true || is_map<T>::value == true || is_pair<T>::value == true
+			|| is_unordered_map<T>::value == true || is_unordered_set<T>::value == true || is_deque<T>::value == true || is_set<T>::value == true;
 
 		template <typename T>
 		concept boolean = std::is_same<bool, T>::value == true;
 
 		template <typename T>
 		concept integral = std::is_arithmetic<T>::value == true && std::is_same<bool, T>::value == false && std::is_floating_point<T>::value == false;
+
+		template <typename T>
+		concept floating_point = std::is_floating_point<T>::value == true;
+
+		template <typename T>
+		concept enumeration = std::is_enum<T>::value == true;
 	}
 }

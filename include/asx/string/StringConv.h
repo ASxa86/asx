@@ -82,6 +82,12 @@ namespace asx
 		return j.dump();
 	}
 
+	template <concepts::enumeration T>
+	std::string ToString(T x)
+	{
+		return std::string{magic_enum::enum_name(x)};
+	}
+
 	template <typename T>
 	typename std::remove_reference<T>::type FromString(std::string_view x);
 
@@ -98,13 +104,32 @@ namespace asx
 		}
 	}
 
+	template <concepts::floating_point T>
+	void FromString(std::string_view x, T& t)
+	{
+		std::from_chars(x.data(), x.data() + x.size(), t);
+	}
+
+	template <concepts::container T>
+	void FromString(std::string_view x, T& t)
+	{
+		auto j = nlohmann::json::parse(x);
+		t = j.get<T>();
+	}
+
+	template <concepts::enumeration T>
+	void FromString(std::string_view x, T& t)
+	{
+		t = magic_enum::enum_cast<T>(x).value_or(T{});
+	}
+
 	template <typename T>
 	typename std::remove_reference<T>::type FromString(std::string_view x)
 	{
 		using TNoRef = typename std::remove_const<typename std::remove_reference<T>::type>::type;
 
 		TNoRef t{};
-		FromString(x, t);
+		FromString<TNoRef>(x, t);
 		return t;
 	}
 }
