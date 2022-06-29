@@ -14,7 +14,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 find_package(magic_enum CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME} PUBLIC
 	magic_enum::magic_enum
 	nlohmann_json::nlohmann_json
 )
