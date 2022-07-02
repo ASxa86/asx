@@ -1,3 +1,4 @@
+add_subdirectory(core)
 add_subdirectory(gl)
 add_subdirectory(object)
 add_subdirectory(signal)

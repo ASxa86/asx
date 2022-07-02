@@ -18,3 +18,8 @@ const std::vector<std::unique_ptr<asx::Property>>& Properties::getProperties() c
 {
 	return this->properties;
 }
+
+void Properties::setFactory(asx::Factory* x)
+{
+	this->factory = x;
+}

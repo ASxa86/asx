@@ -6,6 +6,8 @@
 
 namespace asx
 {
+	class Factory;
+
 	class ASX_CORE_EXPORT Properties
 	{
 	public:
@@ -17,7 +19,10 @@ namespace asx
 		Properties& operator=(Properties&&) noexcept = delete;
 
 		template <typename T>
-		void addProperty(std::string_view name, T& p)
+		void addBase();
+
+		template <typename T>
+		void addProperty(std::string_view name, T p)
 		{
 		}
 
@@ -30,7 +35,20 @@ namespace asx
 
 		const std::vector<std::unique_ptr<Property>>& getProperties() const noexcept;
 
+		void setFactory(Factory* x);
+
 	private:
+		std::vector<Properties*> base;
 		std::vector<std::unique_ptr<Property>> properties;
+		Factory* factory{};
 	};
+}
+
+#include <asx/core/Factory.h>
+
+template <typename T>
+void asx::Properties::addBase()
+{
+	auto& p = this->factory->template registerType<T>();
+	this->base.push_back(&p);
 }

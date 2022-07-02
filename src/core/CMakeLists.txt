@@ -4,11 +4,13 @@ add_library(${PROJECT_NAME})
 
 
 target_sources(${PROJECT_NAME} PRIVATE
+	${PROJECT_INCLUDE_DIR}/asx/core/Factory.h
 	${PROJECT_INCLUDE_DIR}/asx/core/Properties.h
 	${PROJECT_INCLUDE_DIR}/asx/core/Property.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	Factory.cpp
 	Properties.cpp
 	Property.cpp
 )
