@@ -33,6 +33,7 @@ set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+add_subdirectory(app)
 add_subdirectory(src)
 
 if(BUILD_TESTS)

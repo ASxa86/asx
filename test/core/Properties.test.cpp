@@ -64,4 +64,14 @@ TEST(Properties, test)
 		type.addProperty("x", &Base::setX, &Base::getX);
 		type.addProperty("y", &Base::setY, &Base::getY);
 	}
+
+	{
+		auto& type = factory.get<Base>();
+		auto& type = factory.get<Base>(object);
+		auto p = type.getProperty("x");
+		p->setValue(0);
+
+		p->setValue(object, 0);
+		p->setValueString(object, "0");
+	}
 }

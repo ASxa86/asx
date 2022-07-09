@@ -69,7 +69,7 @@ namespace asx
 		///	\brief Check the underlying type of this property.
 		///
 		template <typename T>
-		bool isType() const
+		bool isType() const noexcept
 		{
 			return this->getTypeInfo() == typeid(T);
 		}

@@ -66,7 +66,14 @@ namespace asx
 	template <concepts::string T>
 	std::string ToString(const T& x)
 	{
-		return x;
+		if constexpr(std::is_same<T, std::string_view>::value == true)
+		{
+			return std::string{x};
+		}
+		else
+		{
+			return x;
+		}
 	}
 
 	template <concepts::duration T>
@@ -102,6 +109,31 @@ namespace asx
 		{
 			t = false;
 		}
+	}
+
+	template <concepts::integral T>
+	void FromString(std::string_view x, T& t)
+	{
+		std::from_chars(x.data(), x.data() + x.size(), t);
+	}
+
+	template <concepts::string T>
+	void FromString(std::string_view x, T& t)
+	{
+		if constexpr(std::is_same<T, std::string_view>::value == true)
+		{
+			t = std::string{x};
+		}
+		else
+		{
+			t = x;
+		}
+	}
+
+	template <concepts::duration T>
+	void FromString(std::string_view x, T& t)
+	{
+		t = T{FromString<typename T::rep>(x)};
 	}
 
 	template <concepts::floating_point T>
